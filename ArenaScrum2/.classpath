@@ -5,5 +5,11 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="C:/Users/Mark/Documents/Classes/Software Engineering/Arena/Work_Space/ArenaScrum2/bin/jfoenix.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Mark/Documents/Classes/Software Engineering/Arena/Work_Space/ArenaScrum2/src/mysql-connector-java-5.1.44-bin.jar"/>
+	<classpathentry kind="lib" path="src/commons-codec-1.11-javadoc.jar"/>
+	<classpathentry kind="lib" path="src/commons-codec-1.11-sources.jar"/>
+	<classpathentry kind="lib" path="src/commons-codec-1.11.jar"/>
+	<classpathentry kind="lib" path="src/commons-lang3-3.8.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="src/commons-lang3-3.8.1-sources.jar"/>
+	<classpathentry kind="lib" path="src/commons-lang3-3.8.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

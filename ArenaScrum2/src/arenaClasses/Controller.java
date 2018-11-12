@@ -9,12 +9,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.ResourceBundle;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.RandomStringUtils;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -329,16 +335,33 @@ private void signIn(ActionEvent event) throws SQLException, IOException
     	int roleIDCheck = 0;
     	Connection myConnection = DBHandler.getConnection();
     	currentName = "\""+loginPageUserNameTextField.getText()+"\"";
-    	currentPass = "\""+loginPagePasswordField.getText()+"\"";
     	currName = loginPageUserNameTextField.getText();
     	currPass = loginPagePasswordField.getText();
+    	String SaltPass = "";
     	loadingGif.setVisible(true);
-    	String queryOne = "SELECT * FROM users WHERE userName ="+ currentName + " AND userPassword =" + currentPass;
+    	
+    	
     	try
     	{
-    		PreparedStatement preparedStatement = myConnection.prepareStatement(queryOne);
-    		preparedStatement.executeQuery(queryOne);
-    		rs = preparedStatement.executeQuery(queryOne);
+    		String query = "SELECT * FROM users WHERE userName ="+ currentName;
+    		PreparedStatement preparedStatement = myConnection.prepareStatement(query);
+    		preparedStatement.executeQuery(query);
+    		rs = preparedStatement.executeQuery(query);
+    		
+    		if (rs.first()){
+    			String salt = rs.getString("Salt");
+    			SaltPass = currPass+salt;
+    			currentPass = "\""+DigestUtils.sha256Hex(SaltPass)+"\"";
+    		}
+    		if(!rs.isBeforeFirst())
+    		{
+    			errorLabel.setVisible(true);
+    			loadingGif.setVisible(true);
+    		}
+    		String queryOne = "SELECT * FROM users WHERE userName ="+ currentName + " AND userPassword =" + currentPass;
+    		PreparedStatement preparedStatement2 = myConnection.prepareStatement(queryOne);
+    		preparedStatement2.executeQuery(queryOne);
+    		rs = preparedStatement2.executeQuery(queryOne);
     		rsmd = rs.getMetaData();
     		columnsNumber = rsmd.getColumnCount();
     		if (rs.first())
@@ -448,6 +471,7 @@ private void firstSignUp (ActionEvent event) throws SQLException, IOException
     {
     	Connection myConnection = DBHandler.getConnection();
         String signUpName ="\""+ signUpPageUserNameTextField.getText()+ "\"";
+        String signUpPassword = signUpPagePasswordField.getText();
     	String queryFour = "SELECT * FROM arenadatabase.users WHERE users.userName ="+signUpName+"";
     	try
     	{
@@ -468,13 +492,17 @@ private void firstSignUp (ActionEvent event) throws SQLException, IOException
     	}
     	else if(!rs.isBeforeFirst())
     	{
-    		String insert = "INSERT INTO users(userName,userPassword)"
-                + "VALUES (?,?)";
+    		String Salty = RandomStringUtils.randomAlphanumeric(5);
+    		String SaltPass = signUpPassword+Salty;
+    		String sha256hex = DigestUtils.sha256Hex(SaltPass);
+    		String insert = "INSERT INTO users(userName,userPassword,Salt)"
+                + "VALUES (?,?,?)";
     		try
     		{
     			PreparedStatement preparedStatement = myConnection.prepareStatement(insert);
     			preparedStatement.setString (1, signUpPageUserNameTextField.getText());
-    			preparedStatement.setString (2, signUpPagePasswordField.getText());
+    			preparedStatement.setString (2, sha256hex);
+    			preparedStatement.setString (3,Salty);
     			preparedStatement.execute();
     		}
     		catch(Exception e)

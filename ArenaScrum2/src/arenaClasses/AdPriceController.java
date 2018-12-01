@@ -36,6 +36,9 @@ public class AdPriceController {
 
     @FXML
     private TextField bottomPriceField;
+    
+    @FXML
+    private Label quoteDetected;
 
     @FXML
     private TextField backPriceField;
@@ -122,6 +125,13 @@ public class AdPriceController {
     @FXML
     private void updatePrices(ActionEvent event) throws SQLException{
         hideMsgs();
+        Boolean topQuote = Passwordchecker.quoteChecker(topPriceField.getText());
+        Boolean leftQuote = Passwordchecker.quoteChecker(leftPriceField.getText());
+        Boolean rightQuote = Passwordchecker.quoteChecker(rightPriceField.getText());
+        Boolean bottomQuote = Passwordchecker.quoteChecker(bottomPriceField.getText());
+        Boolean backQuote = Passwordchecker.quoteChecker(backPriceField.getText());
+        Boolean balQuote = Passwordchecker.quoteChecker(balPriceField.getText());
+        if (topQuote==true&&leftQuote==true&&rightQuote==true&&bottomQuote==true&&backQuote==true&&balQuote==true){
         if(top != Integer.parseInt(topPriceField.getText()) ||
                 left != Integer.parseInt(leftPriceField.getText()) ||
                         right != Integer.parseInt(rightPriceField.getText()) ||
@@ -210,6 +220,12 @@ public class AdPriceController {
         }else{
             //no changes to be made
             showError("No changes were made");
+        }
+        }
+        else{
+        	quoteDetected.setVisible(true);
+        	updatePriceBtn.setVisible(false);
+        	goBackBtn.setVisible(false);
         }
 
     }

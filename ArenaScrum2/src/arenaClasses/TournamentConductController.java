@@ -43,6 +43,7 @@ public class TournamentConductController extends Main implements Initializable
     @FXML private Label team2LabelValue;
     @FXML private Label currentMatchLabel;
     @FXML private Label closeIcon;
+    @FXML private Label quoteDetected;
     @FXML private TextField team1ScoreValueTextField;
     @FXML private TextField team2ScoreValueTextField;
     @FXML private JFXButton makeMatchCanelButton;
@@ -592,6 +593,9 @@ public class TournamentConductController extends Main implements Initializable
     	finalizeScoresButton.setDisable(false);
    	    selectMatchWinnerSelectBox.setDisable(false);
    	    PopulateSelectMatchWinnerComboBox();
+   	    Boolean quote1 = Passwordchecker.quoteChecker(team1ScoreValueTextField.getText());
+   	    Boolean quote2 = Passwordchecker.quoteChecker(team2ScoreValueTextField.getText());
+   	    if (quote1 == true&& quote2==true){
     	try
     	{
     		//String ongoingScoreStatusValue = "0"; //For Testing
@@ -627,6 +631,18 @@ public class TournamentConductController extends Main implements Initializable
     	{
     		exception.printStackTrace();
     	}
+   	    }
+   	    else {
+   	    	addNewScoreButton.setVisible(false);
+   	    	scoresGraph.setVisible(false);
+   	    	finalizeScoresButton.setVisible(false);
+   	    	declareTournamentWinnerButton.setVisible(false);
+   	    	makeMatchCanelButton.setVisible(false);
+   	    	makeMatchBeginButton.setVisible(false);
+   	    	teamsGoBack.setVisible(false);
+   	    	quoteDetected.setVisible(true);
+   	    }
+    	
     }
     @FXML
     void requestFinializedScores(ActionEvent event)
@@ -724,6 +740,9 @@ public class TournamentConductController extends Main implements Initializable
     @SuppressWarnings("unchecked")
 	void updateLineChart()
     {
+    	Boolean quote1 = Passwordchecker.quoteChecker(team1ScoreValueTextField.getText());
+   	    Boolean quote2 = Passwordchecker.quoteChecker(team2ScoreValueTextField.getText());
+   	    if (quote1 == true&& quote2==true){
     	try
     	{
     		String team1ScoreValue = team1ScoreValueTextField.getText();
@@ -746,6 +765,17 @@ public class TournamentConductController extends Main implements Initializable
     	{
     		exception.printStackTrace();
     	}
+   	    }
+   	    else{
+   	    	addNewScoreButton.setVisible(false);
+   	    	scoresGraph.setVisible(false);
+   	    	finalizeScoresButton.setVisible(false);
+   	    	declareTournamentWinnerButton.setVisible(false);
+   	    	makeMatchCanelButton.setVisible(false);
+   	    	makeMatchBeginButton.setVisible(false);
+   	    	teamsGoBack.setVisible(false);
+   	    	quoteDetected.setVisible(true);
+   	    }
     }
     void updateSelectTournamentWinnerSelectBox(String tournamentID)
     {

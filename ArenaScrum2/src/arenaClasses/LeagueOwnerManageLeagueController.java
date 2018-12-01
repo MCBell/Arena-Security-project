@@ -27,7 +27,7 @@ public class LeagueOwnerManageLeagueController extends Main{
 
 
 	@FXML
-	private Label YourLeagues;
+	private Label YourLeagues, quoteDetected;
 	@FXML
 	private JFXTextField SearchTextField;
 	@FXML
@@ -189,7 +189,9 @@ private void goBackLeagueSplash(ActionEvent event) throws Exception {
 		Connection myConnection = DBHandler.getConnection();
     	data = FXCollections.observableArrayList();
     	String SearchText =SearchTextField.getText();
+    	Boolean quote = Passwordchecker.quoteChecker(SearchText);
     	int PlayerID = UserModels.getUserID();
+    	if (quote == true){
     	try {
     		ResultSet rs2 = myConnection.createStatement().executeQuery("SELECT LeagueID, LeagueName, LeagueDesc  FROM arenadatabase.league WHERE users_userID_LeagueOwner ="+PlayerID+" and LeagueName = '"+SearchText+"'");
     		while(rs2.next()) {
@@ -208,5 +210,15 @@ private void goBackLeagueSplash(ActionEvent event) throws Exception {
     	columnLeagueName.setCellFactory(TextFieldTableCell.forTableColumn());
     	columnLeagueDescription.setCellFactory(TextFieldTableCell.forTableColumn());
 	}
+    	else{
+    		GoBackButton.setVisible(false);
+    		SearchButton.setVisible(false);
+    		LeaguesTable.setVisible(false);
+    		quoteDetected.setVisible(true);
+    		refreshButton.setVisible(false);
+    		RemoveButton.setVisible(false);
+    	}
+	}
+	
 	
 }

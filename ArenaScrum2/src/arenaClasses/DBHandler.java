@@ -8,7 +8,7 @@ public class DBHandler
 {
 	private static final String CONN_STRING = "jdbc:mysql://localhost:3308/arenadatabase?autoReconnect=true&useSSL=false";
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "Bunghole";
+	private static final String PASSWORD = "";
 
 	//private static final String CONN_STRING = "jdbc:mysql://50.62.209.8:3306/arenadatabase?autoReconnect=true&useSSL=false";
 	//private static final String USERNAME = "arenaAbegaz";

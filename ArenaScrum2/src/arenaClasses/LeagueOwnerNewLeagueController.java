@@ -53,6 +53,8 @@ public class LeagueOwnerNewLeagueController extends Main{
 	@FXML
 	private Label closeIcon;
 	@FXML
+	private Label quoteDetected;
+	@FXML
 	private TableView<ChoiceExpertRatingFormula> ExpertTable;
 	@FXML
 	private TableColumn<ChoiceExpertRatingFormula, String> columnExpertFormula;
@@ -138,8 +140,10 @@ private ObservableList<ChoiceExpertRatingFormula>ExpertRatingFormulalist;
 		int userID= UserModels.getUserID();
 		int arenaID = 50001;
 		String LeagueDescrip = LeagueDescriptionTextField.getText();
+    	Boolean quote1 = Passwordchecker.quoteChecker(LeagueName);
+    	Boolean quote2 = Passwordchecker.quoteChecker(LeagueDescrip);
     	
-    	
+    	if (quote1 ==true && quote2 ==true){
 	try
 	{
 		// These methods modify the initial string values above
@@ -167,4 +171,12 @@ private ObservableList<ChoiceExpertRatingFormula>ExpertRatingFormulalist;
 		// Close Connection
 		myConnection.close();
 	}
+    	}
+    	else{
+    		LeagueGoBackButton.setVisible(false);
+    		CreateLeagueButton.setVisible(false);
+    		loadTableButton.setVisible(false);
+    		ExpertTable.setVisible(false);
+    		quoteDetected.setVisible(true);
+    	}
 }}

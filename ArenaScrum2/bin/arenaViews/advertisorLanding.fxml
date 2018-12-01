@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="897.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arenaClasses.AdvertController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="897.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arenaClasses.AdvertController">
    <children>
       <ImageView fitHeight="569.0" fitWidth="928.0" layoutX="-3.0" layoutY="-11.0">
          <image>
@@ -33,12 +33,12 @@
       </AnchorPane>
       <AnchorPane layoutX="522.0" layoutY="366.0" prefHeight="157.0" prefWidth="346.0" style="-fx-border-color: #f4ce42; -fx-border-width: 8; -fx-background-color: BLACK;">
          <children>
-            <Label layoutX="142.0" layoutY="9.0" text="Balance" textFill="WHITE" underline="true">
+            <Label fx:id="Balencelable" layoutX="142.0" layoutY="9.0" text="Balance" textFill="WHITE" underline="true">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="76.0" text="Due: $" textFill="WHITE">
+            <Label fx:id="Due" layoutX="14.0" layoutY="76.0" text="Due: $" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -53,7 +53,7 @@
                   <Font size="15.0" />
                </font>
             </JFXTextField>
-            <Label layoutX="15.0" layoutY="42.0" text="Amount to Pay:" textFill="WHITE">
+            <Label fx:id="Amount" layoutX="15.0" layoutY="42.0" text="Amount to Pay:" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -70,6 +70,11 @@
             </Label>
             <Label fx:id="balSuccess" layoutX="14.0" layoutY="103.0" prefHeight="20.0" prefWidth="304.0" text="success" textFill="#22ff4e" visible="false" />
             <Label fx:id="balError" layoutX="14.0" layoutY="103.0" prefHeight="35.0" prefWidth="304.0" text="error" textFill="#e13e3e" visible="false" wrapText="true" />
+            <Label fx:id="quoteDetected" layoutX="134.0" layoutY="6.0" prefHeight="140.0" prefWidth="204.0" text="Detected a ' or a &quot;  This could because of an accident or because you're being naugthy.  Either way you're going to be locked out for now." textFill="#ff0f0f" visible="false" wrapText="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="189.0" layoutY="88.0" prefHeight="285.0" prefWidth="663.0" style="-fx-border-color: #f4ce42; -fx-border-width: 8; -fx-background-color: BLACK;">

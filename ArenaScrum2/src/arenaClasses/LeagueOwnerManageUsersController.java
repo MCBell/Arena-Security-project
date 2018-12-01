@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -43,6 +44,8 @@ public class LeagueOwnerManageUsersController extends Main{
 	private JFXButton UnBanButton;
 	@FXML
 	private TextField SearchField;
+	@FXML
+	private Label quoteDetected;
 
 	
 	Scene scene;
@@ -170,8 +173,10 @@ public class LeagueOwnerManageUsersController extends Main{
 		Connection myConnection = DBHandler.getConnection();
 		data = FXCollections.observableArrayList();
 		String Searchfield = SearchField.getText();
+		Boolean quote = Passwordchecker.quoteChecker(Searchfield);
 		int OwnerID = UserModels.getUserID();
 		data.removeAll(data);
+		if (quote == true){
 		try
 		{
 			ResultSet rs = myConnection.createStatement().executeQuery("SELECT Distinct userID, userName, LeagueName, MembershipStatusCodeName from users, leaguemembers, league, membershipstatuscode  Where userID=users_UserID and LeagueID=League_LeagueID and MembershipStatuscodeID= MembershipStatuscode_MembershipStatuscodeID and users_userID_LeagueOwner ="+OwnerID+" and userName = '"+Searchfield+"'");
@@ -190,6 +195,16 @@ public class LeagueOwnerManageUsersController extends Main{
 		columnLeagueName.setCellValueFactory(new PropertyValueFactory<>("LeagueName"));
 		columnPlayerStatus.setCellValueFactory(new PropertyValueFactory<>("MembershipStatusCodeName"));
 		manageUsersTable.setItems(data);
+		}
+		else {
+			SearchButton.setVisible(false);
+			manageUsersTable.setVisible(false);
+			RefreshButton.setVisible(false);
+			BanButton.setVisible(false);
+			UnBanButton.setVisible(false);
+			GoBackButton.setVisible(false);
+			quoteDetected.setVisible(true);
+		}
 	}
 	
 	@FXML

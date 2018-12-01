@@ -27,7 +27,7 @@ public class CreateGameController extends Main{
 	@FXML
 	TextArea gameDescField;
 	@FXML
-	Label errorMsg, exErrorMsg, successMsg;
+	Label errorMsg, exErrorMsg, successMsg, quoteDetected;
 
 
 	//Minimum length for valid game name (if applicable)
@@ -41,7 +41,7 @@ public class CreateGameController extends Main{
 	@FXML private TableColumn<GameData, String> gameIDColumn;
 	@FXML  private TableColumn<GameData, String> gameNameColumn;
 	@FXML  private TableColumn<GameData, String> gameDescColumn;
-	@FXML private JFXButton returnBtn;
+	@FXML private JFXButton returnBtn, gameSubmitBtn;
 	Scene scene;
 	Stage stage = new Stage();
 
@@ -67,7 +67,10 @@ public class CreateGameController extends Main{
 
 		String gName = gameNameField.getText();
 		String gDesc = gameDescField.getText();
-
+		Boolean quote1 = Passwordchecker.quoteChecker(gameNameField.getText());
+		Boolean quote2 = Passwordchecker.quoteChecker(gameDescField.getText());
+		
+		if (quote1==true&&quote2==true){
 		if(isValidEntry(gName)){
 			try
 			{
@@ -84,7 +87,12 @@ public class CreateGameController extends Main{
 			}
 			refresh();
 		}
-
+		}
+		else {
+			quoteDetected.setVisible(true);
+			returnBtn.setVisible(false);
+			gameSubmitBtn.setVisible(false);
+		}
 	}
 
 

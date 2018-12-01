@@ -43,6 +43,10 @@ private Label closeIcon;
 @FXML
 private Label errorLabel;
 @FXML
+private Label errorSame;
+@FXML
+private Label errorCommon;
+@FXML
 private JFXButton loginPageSignUpButton;
 @FXML
 private JFXButton loginPageSignInButton;
@@ -64,6 +68,26 @@ private JFXButton signUpPageSignUpButton;
 private JFXButton signUpPageGoBackButton;
 @FXML
 private Label errorLabelRegForm;
+@FXML
+private Label ErrorCap;
+@FXML
+private Label Errorshort;
+@FXML
+private Label ErrorNum;
+@FXML
+private Label attemptsLabel;
+@FXML
+private Label PassReq1;
+@FXML
+private Label PassReq2;
+@FXML
+private Label PassReq3;
+@FXML
+private Label PassReq4;
+@FXML
+private Label Errorattempts;
+@FXML
+private Label quoteDetected;
 @FXML
 private Label successLabelRegForm;
 @FXML
@@ -186,6 +210,7 @@ private ObservableList<ManageUsersController>data2;
 private PreparedStatement pst,pstTwo;
 static String currName,currPass;
 public static int currUserID,currRoleID,appRoleChoice;
+int attempts = 0;
 
 
 @Override
@@ -333,118 +358,144 @@ private void goToTeamsApp(ActionEvent event) throws Exception {
 private void signIn(ActionEvent event) throws SQLException, IOException
     {
     	int roleIDCheck = 0;
+    	int remain;
     	Connection myConnection = DBHandler.getConnection();
     	currentName = "\""+loginPageUserNameTextField.getText()+"\"";
     	currName = loginPageUserNameTextField.getText();
     	currPass = loginPagePasswordField.getText();
     	String SaltPass = "";
     	loadingGif.setVisible(true);
+    	Boolean quote1 = Passwordchecker.quoteChecker(currName);
+    	Boolean quote2 = Passwordchecker.quoteChecker(currPass);
+    	Errorattempts.setVisible(false);
+    	attemptsLabel.setVisible(false);
+    	errorLabel.setVisible(false);
     	
-    	
-    	try
-    	{
-    		String query = "SELECT * FROM users WHERE userName ="+ currentName;
-    		PreparedStatement preparedStatement = myConnection.prepareStatement(query);
-    		preparedStatement.executeQuery(query);
-    		rs = preparedStatement.executeQuery(query);
-    		
-    		if (rs.first()){
-    			String salt = rs.getString("Salt");
-    			SaltPass = currPass+salt;
-    			currentPass = "\""+DigestUtils.sha256Hex(SaltPass)+"\"";
-    		}
-    		if(!rs.isBeforeFirst())
+    	if (quote1 ==true && quote2 == true){
+    		try
     		{
-    			errorLabel.setVisible(true);
-    			loadingGif.setVisible(true);
+    			String query = "SELECT * FROM users WHERE userName ="+ currentName;
+    			PreparedStatement preparedStatement = myConnection.prepareStatement(query);
+    			preparedStatement.executeQuery(query);
+    			rs = preparedStatement.executeQuery(query);
+    			if (attempts<4){
+    				if (rs.first()){
+    					String salt = rs.getString("Salt");
+    					SaltPass = currPass+salt;
+    					currentPass = "\""+DigestUtils.sha256Hex(SaltPass)+"\"";
+    				}
+    				if(!rs.isBeforeFirst())
+    				{
+    					errorLabel.setVisible(true);
+    					loadingGif.setVisible(true);
+    				}
+    				String queryOne = "SELECT * FROM users WHERE userName ="+ currentName + " AND userPassword =" + currentPass;
+    				PreparedStatement preparedStatement2 = myConnection.prepareStatement(queryOne);
+    				preparedStatement2.executeQuery(queryOne);
+    				rs = preparedStatement2.executeQuery(queryOne);
+    				rsmd = rs.getMetaData();
+    				columnsNumber = rsmd.getColumnCount();
+    				if (rs.first())
+    				{
+    					roleIDCheck = rs.getInt(4);
+    					currUserID = rs.getInt("userID");
+    					currRoleID = rs.getInt("userRoleID");
+    				}
+    				if(!rs.isBeforeFirst())
+    				{
+    					errorLabel.setVisible(true);
+    					loadingGif.setVisible(true);
+    					attempts++;
+    					remain = 5- attempts;
+    					attemptsLabel.setText(""+remain+" attempts remain");
+    					attemptsLabel.setVisible(true);
+    				}
+    				if((rs.first()) && roleIDCheck == 0)
+    				{
+    					loginPageSignInButton.getScene().getWindow().hide();
+    					loader.setLocation(getClass().getResource("/arenaViews/operatorLanding.fxml"));
+    					scene = new Scene(loader.load());
+    					stage.setScene(scene);
+    					stage.setResizable(false);
+    					stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/arenaIcon.png")));
+    					stage.setTitle("Arena");
+    					stage.show();
+    				}
+    				if((rs.first()) && roleIDCheck == 1)
+    				{
+    					loginPageSignInButton.getScene().getWindow().hide();
+    					loader.setLocation(getClass().getResource("/arenaViews/leagueOwnerLanding.fxml"));
+    					scene = new Scene(loader.load());
+    					stage.setScene(scene);
+    					stage.setResizable(false);
+    					stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/arenaIcon.png")));
+    					stage.setTitle("Arena");
+    					stage.show();
+    					UserModels UserID = new UserModels(currUserID);
+    					UserID.setUserID(currUserID);
+    				}
+    				if((rs.first()) && roleIDCheck == 2)
+    				{
+    					loginPageSignInButton.getScene().getWindow().hide();
+    					loader.setLocation(getClass().getResource("/arenaViews/advertisorLanding.fxml"));
+    					scene = new Scene(loader.load());
+    					stage.setScene(scene);
+    					stage.setResizable(false);
+    					stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/arenaIcon.png")));
+    					stage.setTitle("Arena");
+    					stage.show();
+    					UserModels UserID = new UserModels(currUserID);
+    					UserID.setUserID(currUserID);
+    				}
+    				if((rs.first()) && roleIDCheck == 3)
+    				{
+    					loginPageSignInButton.getScene().getWindow().hide();
+    					loader.setLocation(getClass().getResource("/arenaViews/playerLanding.fxml"));
+    					scene = new Scene(loader.load());
+    					stage.setScene(scene);
+    					stage.setResizable(false);
+    					stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/arenaIcon.png")));
+    					stage.setTitle("Arena");
+    					stage.show();
+    					UserModels UserID = new UserModels(currUserID);
+    					UserID.setUserID(currUserID);
+    				}
+    				if((rs.first()) && roleIDCheck == 4)
+    				{
+    					loginPageSignInButton.getScene().getWindow().hide();
+    					loader.setLocation(getClass().getResource("/arenaViews/spectatorLanding.fxml"));
+    					scene = new Scene(loader.load());
+    					stage.setScene(scene);
+    					stage.setResizable(false);
+    					stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/arenaIcon.png")));
+    					stage.setTitle("Arena");
+    					stage.show();
+    				}
+    			}
+    			else{
+    				remain = 5- attempts-1;
+    				attemptsLabel.setText(""+remain+" attempts remain");
+    				loginPageSignInButton.setVisible(false);
+    				Errorattempts.setVisible(true);
+    			}	
     		}
-    		String queryOne = "SELECT * FROM users WHERE userName ="+ currentName + " AND userPassword =" + currentPass;
-    		PreparedStatement preparedStatement2 = myConnection.prepareStatement(queryOne);
-    		preparedStatement2.executeQuery(queryOne);
-    		rs = preparedStatement2.executeQuery(queryOne);
-    		rsmd = rs.getMetaData();
-    		columnsNumber = rsmd.getColumnCount();
-    		if (rs.first())
+    		catch(SQLException e)
     		{
-    			roleIDCheck = rs.getInt(4);
-    			currUserID = rs.getInt("userID");
-    			currRoleID = rs.getInt("userRoleID");
+    			System.out.println("ERROR: Issue Checking User Name & Password.");
+    			e.printStackTrace();
     		}
-    		if(!rs.isBeforeFirst())
+    		finally
     		{
-    			errorLabel.setVisible(true);
-    			loadingGif.setVisible(true);
-    		}
-    		if((rs.first()) && roleIDCheck == 0)
-    		{
-    			loginPageSignInButton.getScene().getWindow().hide();
-    			loader.setLocation(getClass().getResource("/arenaViews/operatorLanding.fxml"));
-    			scene = new Scene(loader.load());
-    			stage.setScene(scene);
-    			stage.setResizable(false);
-    			stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/arenaIcon.png")));
-    			stage.setTitle("Arena");
-    			stage.show();
-    		}
-    		if((rs.first()) && roleIDCheck == 1)
-    		{
-    			loginPageSignInButton.getScene().getWindow().hide();
-    			loader.setLocation(getClass().getResource("/arenaViews/leagueOwnerLanding.fxml"));
-    			scene = new Scene(loader.load());
-    			stage.setScene(scene);
-    			stage.setResizable(false);
-    			stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/arenaIcon.png")));
-    			stage.setTitle("Arena");
-    			stage.show();
-            	UserModels UserID = new UserModels(currUserID);
-            	UserID.setUserID(currUserID);
-    		}
-    		if((rs.first()) && roleIDCheck == 2)
-    		{
-    			loginPageSignInButton.getScene().getWindow().hide();
-    			loader.setLocation(getClass().getResource("/arenaViews/advertisorLanding.fxml"));
-    			scene = new Scene(loader.load());
-    			stage.setScene(scene);
-    			stage.setResizable(false);
-    			stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/arenaIcon.png")));
-    			stage.setTitle("Arena");
-    			stage.show();
-            	UserModels UserID = new UserModels(currUserID);
-            	UserID.setUserID(currUserID);
-    		}
-    		if((rs.first()) && roleIDCheck == 3)
-    		{
-    			loginPageSignInButton.getScene().getWindow().hide();
-    			loader.setLocation(getClass().getResource("/arenaViews/playerLanding.fxml"));
-    			scene = new Scene(loader.load());
-            	stage.setScene(scene);
-            	stage.setResizable(false);
-            	stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/arenaIcon.png")));
-            	stage.setTitle("Arena");
-            	stage.show();
-            	UserModels UserID = new UserModels(currUserID);
-            	UserID.setUserID(currUserID);
-    		}
-    		if((rs.first()) && roleIDCheck == 4)
-    		{
-    			loginPageSignInButton.getScene().getWindow().hide();
-    			loader.setLocation(getClass().getResource("/arenaViews/spectatorLanding.fxml"));
-    			scene = new Scene(loader.load());
-    			stage.setScene(scene);
-    			stage.setResizable(false);
-    			stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/arenaIcon.png")));
-    			stage.setTitle("Arena");
-    			stage.show();
+    			myConnection.close();
     		}
     	}
-    	catch(SQLException e)
-    	{
-    		System.out.println("ERROR: Issue Checking User Name & Password.");
-    		e.printStackTrace();
-    	}
-    	finally
-    	{
-    		myConnection.close();
+    	else{
+    		loginPageSignInButton.setVisible(false);
+    		loginPageUserNameTextField.setVisible(false);
+    		loginPagePasswordField.setVisible(false);
+    		loginPageSignUpButton.setVisible(false);
+    		GuestButton.setVisible(false);
+    		quoteDetected.setVisible(true);
     	}
     }
 @FXML
@@ -473,50 +524,112 @@ private void firstSignUp (ActionEvent event) throws SQLException, IOException
         String signUpName ="\""+ signUpPageUserNameTextField.getText()+ "\"";
         String signUpPassword = signUpPagePasswordField.getText();
     	String queryFour = "SELECT * FROM arenadatabase.users WHERE users.userName ="+signUpName+"";
-    	try
-    	{
-    		PreparedStatement preparedStatementOne = myConnection.prepareStatement(queryFour);
-    		preparedStatementOne.executeQuery(queryFour);
-    		rs = preparedStatementOne.executeQuery(queryFour);
-    	}
-    	catch(SQLException e)
-    	{
-    		e.printStackTrace();
-    		System.out.println("ERROR @ Conrol.firstSignUp. First Try/Catch.");
-    	}
-    	if(rs.first())
-    	{
-    		successLabelRegForm.setVisible(false);
-    		errorLabelRegForm.setVisible(true);
-    		myConnection.close();
-    	}
-    	else if(!rs.isBeforeFirst())
-    	{
-    		String Salty = RandomStringUtils.randomAlphanumeric(5);
-    		String SaltPass = signUpPassword+Salty;
-    		String sha256hex = DigestUtils.sha256Hex(SaltPass);
-    		String insert = "INSERT INTO users(userName,userPassword,Salt)"
-                + "VALUES (?,?,?)";
+    	Boolean LengthT = Passwordchecker.lengthchecker(signUpPassword);
+    	Boolean CapT = Passwordchecker.CapitalChecker(signUpPassword);
+    	Boolean numT = Passwordchecker.NumberChecker(signUpPassword);
+    	Boolean sameUP = Passwordchecker.userPass(signUpName, signUpPassword);
+    	Boolean commonPass = Passwordchecker.dictionary(signUpPassword);
+    	Boolean quote1 = Passwordchecker.quoteChecker(signUpPassword);
+    	Boolean quote2 = Passwordchecker.quoteChecker(signUpName);
+    	ErrorCap.setVisible(false);
+		ErrorNum.setVisible(false);
+		Errorshort.setVisible(false);
+    	
+    	if (quote1 ==true && quote2 == true){
     		try
     		{
-    			PreparedStatement preparedStatement = myConnection.prepareStatement(insert);
-    			preparedStatement.setString (1, signUpPageUserNameTextField.getText());
-    			preparedStatement.setString (2, sha256hex);
-    			preparedStatement.setString (3,Salty);
-    			preparedStatement.execute();
+    			PreparedStatement preparedStatementOne = myConnection.prepareStatement(queryFour);
+    			preparedStatementOne.executeQuery(queryFour);
+    			rs = preparedStatementOne.executeQuery(queryFour);
     		}
-    		catch(Exception e)
+    		catch(SQLException e)
     		{
     			e.printStackTrace();
-    			System.out.println("ERROR: Prepared Statement Failure @ Sign Up Button. Control.firstSignUp. 2nd Try/Catch.");
+    			System.out.println("ERROR @ Conrol.firstSignUp. First Try/Catch.");
     		}
-    		finally
+    		if(rs.first())
     		{
+    			PassReq1.setVisible(false);
+    			PassReq2.setVisible(false);
+    			PassReq3.setVisible(false);
+    			PassReq4.setVisible(false);
+    			successLabelRegForm.setVisible(false);
+    			errorLabelRegForm.setVisible(true);
     			myConnection.close();
     		}
-    		errorLabelRegForm.setVisible(false);
-    		successLabelRegForm.setVisible(true);
+    		
+    		else if(!rs.isBeforeFirst()&&LengthT==true&&CapT==true&&numT==true&&sameUP==true&&commonPass==true)
+    		{
+    			String Salty = RandomStringUtils.randomAlphanumeric(5);
+    			String SaltPass = signUpPassword+Salty;
+    			String sha256hex = DigestUtils.sha256Hex(SaltPass);
+    			String insert = "INSERT INTO users(userName,userPassword,Salt)"
+    					+ "VALUES (?,?,?)";
+    			try
+    			{
+    				PreparedStatement preparedStatement = myConnection.prepareStatement(insert);
+    				preparedStatement.setString (1, signUpPageUserNameTextField.getText());
+    				preparedStatement.setString (2, sha256hex);
+    				preparedStatement.setString (3,Salty);
+    				preparedStatement.execute();
+    			}
+    			catch(Exception e)
+    			{
+    				e.printStackTrace();
+    				System.out.println("ERROR: Prepared Statement Failure @ Sign Up Button. Control.firstSignUp. 2nd Try/Catch.");
+    			}
+    			finally
+    			{
+    				myConnection.close();
+    			}
+    			PassReq1.setVisible(false);
+    			PassReq2.setVisible(false);
+    			PassReq3.setVisible(false);
+    			PassReq4.setVisible(false);
+    			errorLabelRegForm.setVisible(false);
+    			successLabelRegForm.setVisible(true);
+    			}
+    		else if (sameUP==false){
+    			PassReq1.setVisible(false);
+    			PassReq2.setVisible(false);
+    			PassReq3.setVisible(false);
+    			PassReq4.setVisible(false);
+    			errorSame.setVisible(true);
     		}
+    		else if (commonPass==false){
+    			PassReq1.setVisible(false);
+    			PassReq2.setVisible(false);
+    			PassReq3.setVisible(false);
+    			PassReq4.setVisible(false);
+    			errorCommon.setVisible(true);
+    		}
+    		else
+    		{
+    			PassReq1.setVisible(false);
+    			PassReq2.setVisible(false);
+    			PassReq3.setVisible(false);
+    			PassReq4.setVisible(false);
+    			
+    			if(LengthT==false)
+    				Errorshort.setVisible(true);
+    			if(CapT==false)
+    				ErrorCap.setVisible(true);
+    			if(numT==false)
+    				ErrorNum.setVisible(true);
+    			myConnection.close();
+    		}
+    	}
+    	else {
+    		signUpPageSignUpButton.setVisible(false);
+    		signUpPageUserNameTextField.setVisible(false);
+    		signUpPagePasswordField.setVisible(false);
+    		signUpPageGoBackButton.setVisible(false);
+    		PassReq1.setVisible(false);
+			PassReq2.setVisible(false);
+			PassReq3.setVisible(false);
+			PassReq4.setVisible(false);
+    		quoteDetected.setVisible(true);
+    	}
     	}
 @FXML
 private void goToApplicationPage(ActionEvent event) throws Exception

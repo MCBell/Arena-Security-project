@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1256.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arenaClasses.TournamentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1256.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arenaClasses.TournamentController">
    <children>
       <ImageView fitHeight="437.0" fitWidth="1299.0" layoutX="-8.0" layoutY="-7.0">
          <image>
@@ -43,6 +43,11 @@
             <Label fx:id="loadMe" layoutX="24.0" layoutY="268.0" text="*Initial Load Requires Refresh" textFill="#656565">
                <font>
                   <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="quoteDetected" layoutX="198.0" layoutY="82.0" prefHeight="140.0" prefWidth="204.0" text="Detected a ' or a &quot;  This could because of an accident or because you're being naugthy.  Either way you're going to be locked out for now." textFill="#ff0f0f" visible="false" wrapText="true">
+               <font>
+                  <Font size="15.0" />
                </font>
             </Label>
          </children>

@@ -32,6 +32,8 @@ private JFXButton teamsGoBack;
 @FXML
 private JFXButton teamsCreateButton;
 @FXML
+private JFXButton teamsRemoveButton;
+@FXML
 private JFXButton teamsRefreshButton;
 @FXML
 private JFXButton pendingRemoveButton;
@@ -55,6 +57,8 @@ private JFXComboBox<String> teamAppComboBox;
 private JFXButton teamAppRefresh;
 @FXML
 private Label errorLabelTeamApp;
+@FXML
+private Label quoteDetected;
 @FXML
 private Label successLabelTeamApp;
 @FXML
@@ -123,7 +127,9 @@ private void addTeam(ActionEvent event) throws SQLException, IOException
     	// TeamName, users_userID, league_LeagueID
         TeamsLOTable userData2 = LeaguesTableForTeams.getSelectionModel().getSelectedItem();
         int selectedteamID = userData2.getLeagueID();
+        Boolean quote = Passwordchecker.quoteChecker(teamsNameTextField.getText());
     	String addingTeam = "INSERT INTO teams(TeamName, users_userID, league_LeagueID)"+ "VALUES (?,?,?)";
+    	if (quote == true){
     	try
     	{
     		PreparedStatement preparedStatement = myConnection.prepareStatement(addingTeam);
@@ -140,6 +146,16 @@ private void addTeam(ActionEvent event) throws SQLException, IOException
     		}
     	finally {
     		myConnection.close();
+    	}
+    	}
+    	else{
+    		teamsCreateButton.setVisible(false);
+    		teamsGoBack.setVisible(false);
+    		teamsRemoveButton.setVisible(false);
+    		teamsRefreshButton.setVisible(false);
+    		teamsGoBack.setVisible(false);
+    		LeaguesTableForTeams.setVisible(false);
+    		quoteDetected.setVisible(true);
     	}
     	}
 // Teams Refresh Button Functionality

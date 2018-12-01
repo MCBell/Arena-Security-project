@@ -21,6 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -38,6 +39,14 @@ private JFXButton signUpPageGoBackButton;
 private Label closeIcon;
 @FXML
 private Label advertAmountDue;
+@FXML
+private Label quoteDetected;
+@FXML
+private Label Balencelable;
+@FXML
+private Label Amount;
+@FXML 
+private Label Due;
 @FXML
 private JFXTextField adPayAmountField;
 @FXML
@@ -517,6 +526,8 @@ private void getAdBal() throws SQLException{
 @FXML
 private void payAdBal(ActionEvent ae) throws SQLException {
 	hideMsgs();
+	Boolean quote = Passwordchecker.quoteChecker(adPayAmountField.getText());
+	if (quote = true){
 	if (Integer.parseInt(adPayAmountField.getText()) <= Integer.parseInt(advertAmountDue.getText()) && Integer.parseInt(adPayAmountField.getText()) > 0
 	) {
 
@@ -548,6 +559,18 @@ private void payAdBal(ActionEvent ae) throws SQLException {
 			showBalError("Amount entered greater than total amount due. Amount has been adjusted, press PAY if you wish to proceed");
 		}
 	}
+	}
+	else{
+		quoteDetected.setVisible(true);
+		advertPayBalance.setVisible(false);
+		adPayAmountField.setVisible(false);
+		advertAmountDue.setVisible(false);
+		Balencelable.setVisible(false);
+		Amount.setVisible(false);
+		Due.setVisible(false);
+		signUpPageGoBackButton.setVisible(false);
+	}
+		
 }
 private void showBalMsg(String s){
 	balSuccess.setText(s);

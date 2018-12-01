@@ -40,6 +40,8 @@ public class PlayerJoinLeague extends Main{
 	@FXML
 	private Label loadMe;
 	@FXML
+	private Label quoteDetected;
+	@FXML
 	private JFXButton JoinLeagueButton;
 	@FXML
 	private JFXButton GoBackButton;
@@ -157,6 +159,8 @@ private void goBackPlayerSplash(ActionEvent event) throws Exception {
     	data = FXCollections.observableArrayList();
     	data.removeAll(data);
     	String SearchString = SearchBar.getText();
+    	Boolean quote = Passwordchecker.quoteChecker(SearchString);
+    	if (quote == true){
     	try {
     		ResultSet rs2 = myConnection.createStatement().executeQuery("SELECT LeagueID, LeagueName, LeagueDesc  FROM arenadatabase.league  WHERE  leagueName='"+SearchString+"'");
     		while(rs2.next()) {
@@ -172,5 +176,13 @@ private void goBackPlayerSplash(ActionEvent event) throws Exception {
     	columnLeagueDescription.setCellValueFactory(new PropertyValueFactory<>("LeagueDesc"));
     	PlayerLeagueTable.setItems(data);
 	}
-	
+    	else{
+    		quoteDetected.setVisible(true);
+    		PlayerLeagueTable.setVisible(false);
+    		SearchButton.setVisible(false);
+    		JoinLeagueButton.setVisible(false);
+    		refreshButton.setVisible(false);
+    		GoBackButton.setVisible(false);
+    	}
+	}
 }

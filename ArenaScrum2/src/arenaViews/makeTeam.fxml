@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="1080.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arenaClasses.TeamsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="1080.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arenaClasses.TeamsController">
    <children>
       <ImageView fitHeight="504.0" fitWidth="1115.0" layoutX="-6.0" layoutY="-9.0">
          <image>
@@ -77,6 +77,11 @@
             <Label fx:id="loadMe11" layoutX="120.0" layoutY="339.0" text="2) Name Team" textFill="WHITE" />
             <Label fx:id="loadMe12" layoutX="70.0" layoutY="308.0" text="Team Creation Instructions:" textFill="WHITE" underline="true" />
             <Label fx:id="loadMe111" layoutX="120.0" layoutY="354.0" text="3) Press 'Create Team' Button " textFill="WHITE" />
+            <Label fx:id="quoteDetected" layoutX="198.0" layoutY="109.0" prefHeight="140.0" prefWidth="204.0" text="Detected a ' or a &quot;  This could because of an accident or because you're being naugthy.  Either way you're going to be locked out for now." textFill="#ff0f0f" visible="false" wrapText="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

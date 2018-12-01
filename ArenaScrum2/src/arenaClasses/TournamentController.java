@@ -35,6 +35,7 @@ public class TournamentController extends Main implements Initializable
     @FXML private TableColumn<TournamentData, String> getTournamentsTournamentStyleColumn;
     @FXML private TableColumn<TournamentData, String> getTournamentsTournamentDateColumn;
     @FXML private Label loadMe;
+    @FXML private Label quoteDetected;
     @FXML private JFXButton getLeagueReturn;
     @FXML private JFXButton tournamentRefresh;
     @FXML private JFXButton createNewTournament;
@@ -195,6 +196,9 @@ public class TournamentController extends Main implements Initializable
     @FXML
     private void createTournament(ActionEvent event)
     {
+    	Boolean quote1 = Passwordchecker.quoteChecker(createTournamentDescField.getText());
+    	Boolean quote2 = Passwordchecker.quoteChecker(createTournamentNameField.getText());
+    	if (quote1 == true && quote2 == true){
     	try
     	{
     		String choiceBoxLeagueValue = ChoiceBoxLeague.getValue();
@@ -232,6 +236,14 @@ public class TournamentController extends Main implements Initializable
 		{
 			ex.printStackTrace();
 		}
+    	}
+    	else{
+    		createNewTournament.setVisible(false);
+    		getLeagueReturn.setVisible(false);
+    		tournamentRefresh.setVisible(false);
+    		getTournamentsTable.setVisible(false);
+    		quoteDetected.setVisible(true);
+    	}
     }
     @FXML
     private void removeTournament(ActionEvent event) throws SQLException

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1270.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arenaClasses.ArenaController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1270.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arenaClasses.ArenaController">
    <children>
       <ImageView fitHeight="435.0" fitWidth="1309.0" layoutX="-7.0" layoutY="-7.0">
          <image>
@@ -71,6 +71,11 @@
                </font>
             </Label>
             <TextField fx:id="createArenaNameField" layoutX="419.0" layoutY="48.0" />
+            <Label fx:id="quoteDetected" layoutX="166.0" layoutY="114.0" prefHeight="140.0" prefWidth="204.0" text="Detected a ' or a &quot;  This could because of an accident or because you're being naugthy.  Either way you're going to be locked out for now." textFill="#ff0f0f" visible="false" wrapText="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

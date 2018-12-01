@@ -26,6 +26,7 @@ public class ArenaController extends Main
 {
 	@FXML  private Label closeIcon;
 	@FXML private Label errorLabel;
+	@FXML private Label quoteDetected;
 	@FXML private TableView<ArenaData> getTArenasTable;
 	@FXML private TableColumn<ArenaData, String> getArenasArenaIDColumn;
 	@FXML private TableColumn<ArenaData, String> getArenasArenaNameColumn;
@@ -122,7 +123,8 @@ public class ArenaController extends Main
 	@FXML
     void createArena(ActionEvent event)
 	{
-		System.out.println("createArena");
+		Boolean quote = Passwordchecker.quoteChecker(createArenaNameField.getText());
+		if (quote == true){
 		try
     	{
 			Connection connection = DBHandler.getConnection();
@@ -154,6 +156,12 @@ public class ArenaController extends Main
     	catch(Exception ex)
 		{
 			System.out.println("Error: " + ex);
+		}
+		}
+		else {
+			quoteDetected.setVisible(true);
+			operatorArenaReturnButton.setVisible(false);
+			createNewArena.setVisible(false);
 		}
     }
 	@FXML

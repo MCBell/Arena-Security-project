@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="loginBGPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="459.0" prefWidth="529.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arenaClasses.Controller">
+<AnchorPane fx:id="loginBGPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="459.0" prefWidth="529.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arenaClasses.Controller">
    <children>
       <ImageView fitHeight="489.0" fitWidth="557.0" layoutX="-2.0" opacity="0.43" pickOnBounds="true">
          <image>
@@ -63,6 +63,21 @@
                </font>
             </JFXPasswordField>
             <Label fx:id="errorLabel" layoutX="39.0" layoutY="26.0" text="Invalid Username / Password" textFill="#ff0f0f" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="attemptsLabel" layoutX="39.0" layoutY="140.0" prefHeight="21.0" prefWidth="191.0" textFill="#ff0f0f" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="Errorattempts" layoutX="30.0" layoutY="179.0" text="No More login attempts for now" textFill="#ff0f0f" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="quoteDetected" layoutX="24.0" layoutY="26.0" prefHeight="140.0" prefWidth="238.0" text="Detected a ' or a &quot;  This could because of an accident or because you're being naugthy.  Either way you're going to be locked out for now." textFill="#ff0f0f" visible="false" wrapText="true">
                <font>
                   <Font size="15.0" />
                </font>

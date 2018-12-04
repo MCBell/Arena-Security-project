@@ -49,17 +49,17 @@ public class Passwordchecker {
 		return ok;
 	}
 	static Boolean userPass(String user, String pass){
-		if (user != pass)
-			return true;
-		else
+		if (user.equalsIgnoreCase(pass)==true)
 			return false;
+		else
+			return true;
 	}
 	
 	static Boolean dictionary(String password) throws SQLException{
 		Boolean ok = false;
 		Connection myConnection = DBHandler.getConnection();
 		try{
-			String query = "SELECT * FROM commonpass WHERE userName ="+ password;
+			String query = "SELECT * FROM commonpass WHERE Password = \""+password.toLowerCase()+"\"";
 			PreparedStatement preparedStatement = myConnection.prepareStatement(query);
 			preparedStatement.executeQuery(query);
 			rs = preparedStatement.executeQuery(query);

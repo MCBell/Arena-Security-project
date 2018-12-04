@@ -85,6 +85,10 @@ private Label PassReq3;
 @FXML
 private Label PassReq4;
 @FXML
+private Label PassReq5;
+@FXML
+private Label PassReq6;
+@FXML
 private Label Errorattempts;
 @FXML
 private Label quoteDetected;
@@ -527,13 +531,15 @@ private void firstSignUp (ActionEvent event) throws SQLException, IOException
     	Boolean LengthT = Passwordchecker.lengthchecker(signUpPassword);
     	Boolean CapT = Passwordchecker.CapitalChecker(signUpPassword);
     	Boolean numT = Passwordchecker.NumberChecker(signUpPassword);
-    	Boolean sameUP = Passwordchecker.userPass(signUpName, signUpPassword);
+    	Boolean sameUP = Passwordchecker.userPass(signUpPageUserNameTextField.getText(), signUpPagePasswordField.getText());
     	Boolean commonPass = Passwordchecker.dictionary(signUpPassword);
     	Boolean quote1 = Passwordchecker.quoteChecker(signUpPassword);
-    	Boolean quote2 = Passwordchecker.quoteChecker(signUpName);
+    	Boolean quote2 = Passwordchecker.quoteChecker(signUpPageUserNameTextField.getText());
     	ErrorCap.setVisible(false);
 		ErrorNum.setVisible(false);
 		Errorshort.setVisible(false);
+		errorCommon.setVisible(false);
+		errorSame.setVisible(false);
     	
     	if (quote1 ==true && quote2 == true){
     		try
@@ -553,6 +559,8 @@ private void firstSignUp (ActionEvent event) throws SQLException, IOException
     			PassReq2.setVisible(false);
     			PassReq3.setVisible(false);
     			PassReq4.setVisible(false);
+    			PassReq5.setVisible(false);
+    			PassReq6.setVisible(false);
     			successLabelRegForm.setVisible(false);
     			errorLabelRegForm.setVisible(true);
     			myConnection.close();
@@ -594,6 +602,8 @@ private void firstSignUp (ActionEvent event) throws SQLException, IOException
     			PassReq2.setVisible(false);
     			PassReq3.setVisible(false);
     			PassReq4.setVisible(false);
+    			PassReq5.setVisible(false);
+    			PassReq6.setVisible(false);
     			errorSame.setVisible(true);
     		}
     		else if (commonPass==false){
@@ -601,6 +611,8 @@ private void firstSignUp (ActionEvent event) throws SQLException, IOException
     			PassReq2.setVisible(false);
     			PassReq3.setVisible(false);
     			PassReq4.setVisible(false);
+    			PassReq5.setVisible(false);
+    			PassReq6.setVisible(false);
     			errorCommon.setVisible(true);
     		}
     		else
@@ -609,6 +621,8 @@ private void firstSignUp (ActionEvent event) throws SQLException, IOException
     			PassReq2.setVisible(false);
     			PassReq3.setVisible(false);
     			PassReq4.setVisible(false);
+    			PassReq5.setVisible(false);
+    			PassReq6.setVisible(false);
     			
     			if(LengthT==false)
     				Errorshort.setVisible(true);
@@ -628,6 +642,8 @@ private void firstSignUp (ActionEvent event) throws SQLException, IOException
 			PassReq2.setVisible(false);
 			PassReq3.setVisible(false);
 			PassReq4.setVisible(false);
+			PassReq5.setVisible(false);
+			PassReq6.setVisible(false);
     		quoteDetected.setVisible(true);
     	}
     	}

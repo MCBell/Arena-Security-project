@@ -88,12 +88,12 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="PassReq5" layoutX="36.0" layoutY="190.0" prefHeight="21.0" prefWidth="204.0" text="Not be the same as username" textFill="#0fff22">
+            <Label fx:id="PassReq5" layoutX="36.0" layoutY="190.0" prefHeight="21.0" prefWidth="204.0" text="Not the same as username" textFill="#0fff22">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="PassReq6" layoutX="34.0" layoutY="211.0" prefHeight="21.0" prefWidth="204.0" text="Not be a super common password" textFill="#0fff22">
+            <Label fx:id="PassReq6" layoutX="36.0" layoutY="205.0" prefHeight="50.0" prefWidth="204.0" text="Not a super common password" textFill="#0fff22" wrapText="true">
                <font>
                   <Font size="15.0" />
                </font>

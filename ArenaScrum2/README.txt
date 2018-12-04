@@ -1,0 +1,11 @@
+Purpose of this was primarily for security in logging in and with Passwords.
+
+A copy of the Database that I have is included called arenadatabase.  It is a MySQL Text file.  Using Xampp, you should be able to import it.  The username should be root and there isn't a password asscoiated with this so that it's easy to look at for these purposes.  If those need to be changed, in the Package, under arenaClasses, there will be a class called DBHandler.  Lines 10 and 11 are for the Username and Password.  The commonpass Table is a list that can be update with common passwords.  The users table should show any new users, the salt that was used for the hash and the hash itself.
+
+Sign up Button will lead to a sign up page.  There should be 5 stated rules about what can or can't be a password.  A sixth rule about no " or ' isn't mentioned but it will cause the page to remove all buttons and text fields.  So if a " or ' is put in the field a restart of the program will happen.  
+
+For the most part my changes came from adding a class called PasswordChecker.  It's in the ArenaClasses section of the Package.  In it are methods to check the length of a password, if a digit is used, if a capital letter is used, if the username and password are the same, compare the password to the dictionary (commonpass) and a method to check for ' or ".  The other set of major changes were in the Controller class.  The firstSignUp Method goes from line 525 to 649. This contains implementations of the PasswordChecker class as well as a portion of the Salt and hash method.  The Salt and Hash portion of the code goes from lines 571 to 582.
+
+Lines 362-504 contain the other big method changed to the Controller class.  This is for 1. making sure the Salt is added to the password enter to compare the hashes and 2. to add a login limit.  The salt code runs from lines 381-390. 
+
+So, just using two pages you can test passwords that are too short, don't have a Capital or Number, are the same as the Username, and are or aren't on the list in commonpass.  You can also test the ability to login after creating an account, as well as testing what happens when a " or ' is entered.
